@@ -4,9 +4,12 @@ from pydantic import BaseModel
 
 
 # Order
+from app.user.schemas import UserInResponse
+
+
 class OrderBase(BaseModel):
     address: str
-    price: float = None
+    price: bool
     items: str
 
     class Config:
@@ -28,3 +31,4 @@ class OrderInDB(OrderBase):
 class OrderInResponse(OrderBase):
     id: int
     date_created: datetime
+    user: UserInResponse
