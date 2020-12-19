@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List, Any
 
 from pydantic import BaseModel
 
@@ -8,7 +7,7 @@ from pydantic import BaseModel
 class OrderBase(BaseModel):
     address: str
     price: float = None
-    items: List[Any]
+    items: str
 
     class Config:
         orm_mode = True

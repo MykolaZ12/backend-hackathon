@@ -3,7 +3,9 @@ from typing import Any, List
 from fastapi import APIRouter, Body, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 
+from app.order.models import Order
 from app.user import schemas, services, models, permission
+from app.order.services import order_crud
 from config import settings
 from db.db import get_db
 
@@ -113,3 +115,25 @@ def update_user(
         )
     user = services.user_crud.update(db, db_obj=user, obj_in=user_in)
     return user
+
+
+@router.get("/customer_order/{id}")
+def get_history_order(*, db: Session = Depends(get_db), id: int) -> List[Order]:
+    user = services.user_crud.get(db=db, id=id)
+    if not (user.role == "customer"):
+        raise HTTPException(status_code=404, detail="This user are not customer")
+    orders = order_crud.get_multi_by_user(db=db, user_id=id)
+    if not orders:
+        raise HTTPException(status_code=404, detail="Orders not found")
+    return orders
+
+
+@router.get("/volunteer_order/{id}")
+def get_volunteer_agree_order(*, db: Session = Depends(get_db), id: int) -> List[Order]:
+    user = services.user_crud.get(db=db, id=id)
+    if not (user.role == "volunteer"):
+        raise HTTPException(status_code=404, detail="This user are not volunteer")
+    orders = order_crud.get_multi_by_user(db=db, user_id=id)
+    if not orders:
+        raise HTTPException(status_code=404, detail="Orders not found")
+    return orders

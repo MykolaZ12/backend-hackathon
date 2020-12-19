@@ -11,7 +11,7 @@ class Order(Base):
     price = Column(Numeric(10, 2))
     status = Column(String(50))
     address = Column(String)
-    items = Column(JSONB)
+    items = Column(String)
     volunteer = Column(Integer)
     date_created = Column(DateTime(timezone=True), server_default=func.now())
 

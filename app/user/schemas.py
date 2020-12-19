@@ -6,10 +6,10 @@ from pydantic import BaseModel, EmailStr
 
 class UserBase(BaseModel):
     """Base properties"""
-    role: str
+    email: Optional[EmailStr] = None
     phone_number: str
     full_name: str
-    email: Optional[EmailStr] = None
+    role: str
     is_active: Optional[bool] = True
     is_superuser: bool = False
 
