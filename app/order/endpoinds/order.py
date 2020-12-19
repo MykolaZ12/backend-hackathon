@@ -69,3 +69,18 @@ async def delete_order(
         raise HTTPException(status_code=404, detail="Not enough permissions")
     order = services.order_crud.remove(db=db, id=id)
     return order
+
+
+@router.post("/agree/{id}")
+def agree_order(
+        *,
+        id: int,
+        db: Session = Depends(get_db),
+        current_user: User = Depends(permission.get_current_active_user)
+):
+    order = services.order_crud.get(db=db, id=id)
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    services.order_crud.agree_order(db=db, order_obj=order, user_id=current_user.id)
+    return {"msg": "You agree this order"}
+

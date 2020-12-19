@@ -12,6 +12,7 @@ class Order(Base):
     status = Column(String(50))
     address = Column(String)
     items = Column(JSONB)
+    volunteer = Column(Integer)
     date_created = Column(DateTime(timezone=True), server_default=func.now())
 
     user_id = Column(Integer, ForeignKey("user.id"))
