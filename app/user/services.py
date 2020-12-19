@@ -4,8 +4,8 @@ from typing import Any, Dict, Optional, Union
 
 import emails
 from emails.template import JinjaTemplate
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
-
 
 from app.base.crud import CRUDBase
 from app.user.models import User
@@ -17,11 +17,8 @@ from config.security import get_password_hash, verify_password
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
 
     def create(self, db: Session, *, schema: UserCreate) -> User:
-        db_obj = User(
-            email=schema.email,
-            hashed_password=get_password_hash(schema.password),
-            is_superuser=schema.is_superuser,
-        )
+        obj_in_data = jsonable_encoder(schema, exclude={"password"})
+        db_obj = User(**obj_in_data, hashed_password=get_password_hash(schema.password), )
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)

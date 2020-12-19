@@ -6,6 +6,9 @@ from pydantic import BaseModel, EmailStr
 
 class UserBase(BaseModel):
     """Base properties"""
+    role: str
+    phone_number: str
+    full_name: str
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
     is_superuser: bool = False
@@ -30,8 +33,6 @@ class UserInDB(UserBase):
 
 class UserInResponse(UserBase):
     id: int
-    role: str
-    phone_number: str
     full_name: Optional[str] = None
     date_registrations: datetime
 

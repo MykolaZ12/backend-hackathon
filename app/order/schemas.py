@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 # Order
 class OrderBase(BaseModel):
-    text: str
+
 
     class Config:
         orm_mode = True

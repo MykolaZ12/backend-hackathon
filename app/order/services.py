@@ -5,3 +5,6 @@ from app.order.models import Order
 
 class OrderCRUD(CRUDBase[Order, schemas.OrderCreate, schemas.OrderUpdate]):
     pass
+
+
+order_crud = OrderCRUD(Order)
