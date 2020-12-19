@@ -38,9 +38,9 @@ def login_access_token(
 
 
 @router.post("/password-recovery/{email}")
-def recover_password(email: str, db: Session = Depends(get_db),
-                     background_tasks: BackgroundTasks = Depends()
-                     ) -> Any:
+def recover_password(
+        email: str, *, db: Session = Depends(get_db), background_tasks: BackgroundTasks
+) -> Any:
     """
     Password Recovery
     """
@@ -53,7 +53,8 @@ def recover_password(email: str, db: Session = Depends(get_db),
     password_reset_token = generate_password_reset_token(email=email)
 
     background_tasks.add_task(
-        services.send_reset_password_email, email_to=user.email, email=email, token=password_reset_token
+        services.send_reset_password_email, email_to=user.email, email=email,
+        token=password_reset_token
     )
 
     return {"msg": "Password recovery email has been sent"}
