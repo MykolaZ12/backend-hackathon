@@ -9,6 +9,8 @@ class Order(Base):
     __tablename__ = "order"
     id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
     price = Column(Boolean, default=False)
+    phone_number = Column(String(15))
+    full_name = Column(String(255))
     status = Column(String(50), default="open")
     address = Column(String)
     items = Column(String)

@@ -1,16 +1,18 @@
 from datetime import datetime
+from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-
-# Order
 from app.user.schemas import UserInResponse
 
 
+# Order
 class OrderBase(BaseModel):
     address: str
     price: bool
-    items: str
+    items: Optional[str]
+    full_name: str
+    phone_number: str
 
     class Config:
         orm_mode = True

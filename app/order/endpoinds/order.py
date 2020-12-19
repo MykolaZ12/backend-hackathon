@@ -20,7 +20,7 @@ def get_order(*, id: int, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=List[schemas.OrderInResponse])
 def get_list_orders(db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
-    orders = services.order_crud.get_multi(db=db, skip=skip, limit=limit)
+    orders = services.order_crud.get_only_open(db=db, skip=skip, limit=limit)
     if not orders:
         raise HTTPException(status_code=404, detail="Orders not found")
     return orders
