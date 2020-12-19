@@ -1,11 +1,14 @@
 from datetime import datetime
+from typing import List, Any
 
 from pydantic import BaseModel
 
 
 # Order
 class OrderBase(BaseModel):
-
+    address: str
+    price: float = None
+    items: List[Any]
 
     class Config:
         orm_mode = True
@@ -20,7 +23,7 @@ class OrderUpdate(OrderBase):
 
 
 class OrderInDB(OrderBase):
-    pass
+    user_id: int
 
 
 class OrderInResponse(OrderBase):

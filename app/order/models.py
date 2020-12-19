@@ -1,6 +1,6 @@
-from sqlalchemy import Integer, Column, DateTime, func, String, Table, Numeric
+from sqlalchemy import Integer, Column, DateTime, func, String, Table, Numeric, ForeignKey
 from sqlalchemy.dialects.postgresql import JSONB
-
+from sqlalchemy.orm import relationship
 
 from db.db import Base
 
@@ -14,3 +14,5 @@ class Order(Base):
     items = Column(JSONB)
     date_created = Column(DateTime(timezone=True), server_default=func.now())
 
+    user_id = Column(Integer, ForeignKey("user.id"))
+    user = relationship("User", backref="user")
