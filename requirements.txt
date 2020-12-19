@@ -2,3 +2,8 @@ FastAPI
 uvicorn
 sqlalchemy
 alembic
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
+emails
+email-validator
