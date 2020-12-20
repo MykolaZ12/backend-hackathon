@@ -79,7 +79,8 @@ def agree_order(
         db: Session = Depends(get_db),
         current_user: User = Depends(permission.get_current_active_user)
 ):
-    user = user_crud.get(db=db, id=id)
+    user = user_crud.get(db=db, id=current_user.id)
+
     if not (user.role != "volunteer"):
         raise HTTPException(status_code=404, detail="You are not volunteer")
     order = services.order_crud.get(db=db, id=id)
