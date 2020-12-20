@@ -34,3 +34,4 @@ class OrderInResponse(OrderBase):
     id: int
     date_created: datetime
     user: UserInResponse
+    status: str
