@@ -33,7 +33,7 @@ class OrderInDB(OrderBase):
 class OrderInResponse(OrderBase):
     id: int
     date_created: datetime
-    volunteer: int
+    volunteer: int = None
     status: str
     user: UserInResponse
 
