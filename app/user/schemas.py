@@ -10,8 +10,6 @@ class UserBase(BaseModel):
     phone_number: str
     full_name: str
     role: str
-    is_active: Optional[bool] = True
-    is_superuser: bool = False
 
     class Config:
         orm_mode = True
