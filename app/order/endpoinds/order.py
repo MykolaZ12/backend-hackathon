@@ -1,10 +1,11 @@
 from typing import List, Optional, Any
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sqlalchemy.orm import Session
 
 from app.order import services, schemas
 from app.user import permission
 from app.user.models import User
+from app.user.services import user_crud
 from db.db import get_db
 
 router = APIRouter()
@@ -78,6 +79,9 @@ def agree_order(
         db: Session = Depends(get_db),
         current_user: User = Depends(permission.get_current_active_user)
 ):
+    user = user_crud.get(db=db, id=id)
+    if not (user.role != "volunteer"):
+        raise HTTPException(status_code=404, detail="You are not volunteer")
     order = services.order_crud.get(db=db, id=id)
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
